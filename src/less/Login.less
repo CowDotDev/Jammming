@@ -1,0 +1,29 @@
+@import '_variables';
+@import '_mixins';
+
+.Login {
+    text-align: center;
+    color: @contentText;
+
+    &__button {
+        display: inline-block;
+        padding: 15px 20px;
+        font-family: @contentFont;
+        font-weight: 700;
+        font-size: 20px;
+        text-align: center;
+        text-decoration: none;
+        background-color: @spotify;
+        color: @white;
+        border: none;
+        border-radius: 4px;
+        box-shadow: 0 2px 15px -5px rgba(0,0,0,0.5);
+        .transition(all, .25s);
+
+        &:hover {
+            cursor: pointer;
+            color: darken(@white, 10%);
+            background-color: darken(@spotify, 8%);
+        }
+    }
+}

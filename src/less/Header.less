@@ -1,0 +1,47 @@
+@import '_variables';
+@import '_mixins';
+
+.Header {
+    width: 100%;
+    padding: 10px 0;
+    background-color: @headerBg;
+    text-align: center;
+    box-shadow: 0 2px 15px -5px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.logo {
+    padding: 0;
+    margin: 0;
+    font-family: @headerFont;
+    font-weight: 700;
+    font-style: italic;
+    color: @headerText;
+    font-size: 28px;
+    line-height: 1;
+
+    &::selection,
+    &::-moz-selection {
+        background: @headerBg;
+    }
+    &__highlight {
+        color: @tertiary;
+        .animation(changeColor 5s linear infinite normal);
+    }
+}
+
+// Keyframe animation to change the color of the header logo
+.keyframes(changeColor;{
+    0% {
+        color: @tertiary;
+    }
+    33% {
+        color: @primary;
+    }
+    67% {
+        color: lighten(@secondary, 8%);
+    }
+    100% {
+        color: @tertiary;
+    }
+});

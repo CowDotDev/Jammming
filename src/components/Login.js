@@ -1,8 +1,6 @@
 import React from 'react';
 import '../stylesheets/Login.css';
 
-let processing = false;
-
 class Login extends React.Component {
     render() {
         return (

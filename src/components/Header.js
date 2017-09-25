@@ -2,10 +2,6 @@ import React from 'react';
 import '../stylesheets/Header.css';
 
 class Header extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         let isAuthorized = this.props.isAuthorized;
         return (

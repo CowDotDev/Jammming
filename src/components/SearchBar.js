@@ -5,10 +5,11 @@ class SearchBar extends React.Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
         let term = document.getElementById("searchTerms").value;
-        this.props.searchSpotify(term);
+        let results = await this.props.searchSpotify(term);
+        console.log(results)
     }
     render() {
         return (

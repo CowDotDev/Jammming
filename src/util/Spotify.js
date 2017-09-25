@@ -57,16 +57,30 @@ const Spotify = {
     // Search Spotify API with given search term
     search(term) {
         if (term) {
-            let authHeader = new Headers().set("Authorization", `Bearer ${_accessToken}`);
-            fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/search?q=${term}&?type=album,artist,track&limit=10`, {
-                headers: authHeader
+            return fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/search?q=${term}&type=track&limit=10`, {
+                headers: {
+                    'Authorization': `Bearer ${_accessToken}`
+                }
             }).then(response => {
                 if(response.ok) {
                     return response.json();
                 }
             }).then(jsonResponse => {
-                console.log(jsonResponse);
+                let tracks = (jsonResponse.tracks && jsonResponse.tracks.items.length > 0 ? jsonResponse.tracks.items : []);
+                // Grab all the information for all matched tracks and then return the result
+                return tracks.map(function(track) {
+                    return {
+                        id: track.id,
+                        album: track.album.name,
+                        artist: track.artists[0].name,
+                        title: track.name,
+                        preview_url: track.preview_url
+                    };
+                });
             });
+        } else {
+            // No Terms have been set, should be caught by onSubmit callback, but if not... here is an empty object
+            return {};
         }
     }
 };

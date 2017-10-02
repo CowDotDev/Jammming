@@ -39,7 +39,7 @@ class Jammming extends Component {
         // We have an access_token! Set it to the session, then refresh the page to get the updated state with the correct URL
         // Once again, not how'd like to handle the URL and State, but I don't want the code URL parameter anymore to prevent any issues.
         Spotify.setAccessToken(tokenResponse.access_token);
-        window.location.href = "/";
+        window.location.href = '/';
       } else {
         // We do not have an access_token! Return to the base route, as it will check localStorage if we are in a funky place.
         // Otherwise, the user will be presented with the log-in screen

@@ -55,9 +55,9 @@ const Spotify = {
     },
 
     // Search Spotify API with given search term
-    search(term) {
+    async search(term) {
         if (term) {
-            return fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/search?q=${term}&type=track&limit=10`, {
+            return await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/search?q=${term}&type=track&limit=10`, {
                 headers: {
                     'Authorization': `Bearer ${_accessToken}`
                 }
@@ -80,7 +80,9 @@ const Spotify = {
             });
         } else {
             // No Terms have been set, should be caught by onSubmit callback, but if not... here is an empty object
-            return {};
+            return new Promise(resolve => {
+                resolve({});
+            });
         }
     }
 };

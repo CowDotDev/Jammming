@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import Spotify from './util/Spotify.js';
 
 import Header from './components/Header.js';
-import SearchBar from './components/SearchBar.js';
 import Login from './components/Login.js';
+import SearchBar from './components/SearchBar.js';
+import SearchResults from './components/SearchResults.js';
+import PlaylistViewer from './components/PlaylistViewer.js';
 
 import './stylesheets/Jammming.css';
 
@@ -17,6 +19,7 @@ class Jammming extends Component {
 
     this.handleLogOut = this.handleLogOut.bind(this);
     this.getNewAccessToken = this.getNewAccessToken.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   // Remove the access token from the session and reload the page
@@ -48,12 +51,25 @@ class Jammming extends Component {
     });
   }
 
+  // Search the Spotify API with the submitted term - populate search results with response
+  handleSearch(term) {
+    Spotify.search(term).then(response => {
+      console.log(response);
+    });
+  }
+
   render() {
     // Look at our login status to see which view to load
     let view;
     if(this.state.isAuthorized) {
       // User has an access_token, take them to the logged in view
-      view = <SearchBar searchSpotify={Spotify.search} />;
+      view = (
+        <div className='Jammming__resultsViewerContainer'>
+          <SearchBar searchSpotify={this.handleSearch} />
+          <SearchResults />
+          <PlaylistViewer />
+        </div>
+      );
     } else if(this.state.isProcessingLogin) {
       // User just logged into Spotify OAuth, we now how an AuthCode
       // First, start the request to get the Access Token w/ the AuthCode
@@ -70,6 +86,7 @@ class Jammming extends Component {
     return (
       <div className='Jammming'>
         <Header isAuthorized={this.state.isAuthorized} handleLogOut={this.handleLogOut} />
+        {/* view = Either the Login, Loading, or SearchBar w/ Search Results & Playlist Viewer component(s), depending on log-in state */}
         {view}
       </div>
     );

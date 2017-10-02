@@ -13,7 +13,6 @@ class SearchBar extends React.Component {
         let term = document.getElementById('searchTerms').value,
             label = document.querySelector('.SearchBar__label'),
             classNames = label.className+' '; // Extra space to help substring find the correct class
-        console.log(term.length);
         if(term && term.length >= 1) {
             // Add the show class if it isn't already there
             if(classNames.indexOf(' show ') < 0) {
@@ -28,13 +27,12 @@ class SearchBar extends React.Component {
             document.querySelector('.SearchBar__submit').disabled = true;
         }
     }
-    async handleSubmit(e) {
+    handleSubmit(e) {
         // Grab the search term, make sure it isn't empty and submit the search
         e.preventDefault();
         let term = document.getElementById("searchTerms").value;
         if(term && term !== "") {
-            let results = await this.props.searchSpotify(term);
-            console.log(results);
+            this.props.searchSpotify(term);
         }
     }
     render() {

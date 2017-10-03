@@ -69,9 +69,20 @@ const Spotify = {
                 let tracks = (jsonResponse.tracks && jsonResponse.tracks.items.length > 0 ? jsonResponse.tracks.items : []);
                 // Grab all the information for all matched tracks and then return the result
                 return tracks.map(function(track) {
+                    // Grab the 64x64 album image
+                    let albumImg;
+                    for(var i = 0; i < track.album.images.length; i++) {
+                        let image = track.album.images[i];
+                        if(image.height === 64) {
+                            albumImg = image.url;
+                            break;
+                        }
+                    };
+
                     return {
                         id: track.id,
                         album: track.album.name,
+                        albumImage: albumImg,
                         artist: track.artists[0].name,
                         title: track.name,
                         preview_url: track.preview_url

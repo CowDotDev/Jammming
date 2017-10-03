@@ -1,0 +1,59 @@
+@import '_variables';
+@import '_mixins';
+
+.Track {
+    position: relative;
+    height: 85px;
+    width: 100%;
+    padding: 10px 15px 10px 95px;
+    margin: 0;
+    background-color: darken(@bg, 10%);
+    border-bottom: 1px solid @bg;
+    box-sizing: border-box;
+    .transition(background-color, .25s, ease-in-out);
+
+    &:hover {
+        cursor: pointer;
+        background-color: darken(@bg, 5%);
+
+        .Track__playPreviewOverlay {
+            opacity: 1;
+        }
+    }
+    &__albumArt {
+        position: absolute;
+        top: 10px;
+        left: 15px;
+        z-index: 1;
+        display: block;
+        height: 64px;
+        width: 64px;
+        margin: 0;
+    }
+    &__playPreviewOverlay {
+        opacity: 0;
+        position: absolute;
+        top: 10px;
+        left: 15px;
+        z-index: 2;
+        height: 64px;
+        width: 64px;
+        background-color: rgba(0,0,0,0.35);
+        color: #FFF;
+        text-align: center;
+        .transition(opacity, .25s, ease-in-out);
+
+        i {
+            font-size: 24px;
+            line-height: 64px;
+        }
+    }
+    &__title,
+    &__artistAlbum {
+        padding: 0;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

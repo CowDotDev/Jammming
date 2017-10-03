@@ -14,7 +14,12 @@ class Jammming extends Component {
     super(props);
     this.state = {
       isAuthorized: Spotify.hasAccessToken(),
-      isProcessingLogin: Spotify.getAuthCode()
+      isProcessingLogin: Spotify.getAuthCode(),
+      searchResults: {
+        loading: false,
+        term: "",
+        results: []
+      }
     };
 
     this.handleLogOut = this.handleLogOut.bind(this);
@@ -52,9 +57,24 @@ class Jammming extends Component {
   }
 
   // Search the Spotify API with the submitted term - populate search results with response
-  handleSearch(term) {
-    Spotify.search(term).then(response => {
-      console.log(response);
+  handleSearch(searchTerm) {
+    // First part of the search, we should set the searchTerm to the term of searchResults, as well as turn loading to true
+    this.setState({
+      searchResults: {
+        loading: true,
+        term: searchTerm,
+        results: []
+      }
+    });
+    // Send a Request to Spotify's Search endpoint to receive results to populate
+    Spotify.search(searchTerm).then(response => {
+      this.setState({
+        searchResults: {
+          loading: false,
+          term: searchTerm,
+          results: response
+        }
+      });
     });
   }
 
@@ -66,7 +86,7 @@ class Jammming extends Component {
       view = (
         <div className='Jammming__resultsViewerContainer'>
           <SearchBar searchSpotify={this.handleSearch} />
-          <SearchResults />
+          <SearchResults term={this.state.searchResults.term} results={this.state.searchResults.results} />
           <PlaylistViewer />
         </div>
       );
